@@ -47,7 +47,7 @@
     "spriteId": {"name":"spr_player_atacando3","path":"sprites/spr_player_atacando3/spr_player_atacando3.yy",},
     "timeUnits": 1,
     "playback": 1,
-    "playbackSpeed": 8.0,
+    "playbackSpeed": 12.0,
     "playbackSpeedType": 0,
     "autoRecord": true,
     "volume": 1.0,

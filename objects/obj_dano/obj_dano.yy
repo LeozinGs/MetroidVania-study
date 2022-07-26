@@ -1,17 +1,14 @@
 {
   "spriteId": {
-    "name": "spr_inimigo_esqueleto_idle",
-    "path": "sprites/spr_inimigo_esqueleto_idle/spr_inimigo_esqueleto_idle.yy",
+    "name": "spr_dano",
+    "path": "sprites/spr_dano/spr_dano.yy",
   },
   "solid": false,
   "visible": true,
   "managed": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": {
-    "name": "obj_entity",
-    "path": "objects/obj_entity/obj_entity.yy",
-  },
+  "parentObjectId": null,
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,
@@ -27,16 +24,16 @@
   "eventList": [
     {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
     {"isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":1,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Inimigos",
-    "path": "folders/Objects/Inimigos.yy",
+    "name": "Objects",
+    "path": "folders/Objects.yy",
   },
   "resourceVersion": "1.0",
-  "name": "obj_inimigo_esqueleto",
+  "name": "obj_dano",
   "tags": [],
   "resourceType": "GMObject",
 }

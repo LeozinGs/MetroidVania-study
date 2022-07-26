@@ -2,13 +2,19 @@
 // You can write your code in this editor
 
 //Iniciando variaveis
-var right, left, jump, attack
+var right, left, jump, attack, dash
+
 var chao = place_meeting(x, y + 1, obj_block)
 
 right = keyboard_check(ord("D"))
 left = keyboard_check(ord("A"))
 jump = keyboard_check_pressed(ord("K"))
 attack = keyboard_check_pressed(ord("J"))
+dash = keyboard_check_pressed(ord("L"))
+
+if ataque_buff > 0{
+	ataque_buff -= 1
+}
 
 
 //Codigo de movimentação
@@ -23,6 +29,7 @@ if !chao {
 
 //iniciando a maquina de estados
 switch estado {
+	#region parado
 	case "parado": {
 		sprite_index = spr_player_idle
 		
@@ -38,9 +45,15 @@ switch estado {
 			estado = "ataque"
 			hsp = 0
 			image_index = 0
+		}else if dash{
+			estado = "dash"
+			image_index = 0
 		}
 		break
 	}
+	#endregion
+	
+	#region movendo
 	case "movendo": {
 		//comportamento do estado de movimento
 		sprite_index = spr_player_movendo
@@ -58,9 +71,15 @@ switch estado {
 			estado = "ataque"
 			hsp = 0
 			image_index = 0
+		}else if dash{
+			estado = "dash"
+			image_index = 0
 		}
 		break
 	}
+	#endregion
+	
+	#region pulando
 	case "pulando":{
 		if vsp > 0 {
 			sprite_index = spr_player_caindo
@@ -79,6 +98,9 @@ switch estado {
 		}
 		break
 	}
+	#endregion
+	
+	#region ataque
 	case "ataque": {
 		hsp = 0
 		if combo ==0{
@@ -89,15 +111,76 @@ switch estado {
 			sprite_index = spr_player_atacando3
 		}
 		
-		if  attack && combo < 2 && image_index >= image_number - 2{
+		//criando o objeto de dano
+		if image_index >= 2 && dano == noone && posso{
+			dano = instance_create_layer(x + sprite_width / 2, y - sprite_height / 2, layer, obj_dano)
+			dano.dano = ataque * ataque_mult
+			dano.pai = id
+			posso = false	
+		}
+		
+		//configurando com o buff
+		if attack && combo < 2{
+			ataque_buff = room_speed
+		}
+		
+		if ataque_buff && combo < 2 && image_index >= image_number - 1{
 			combo ++
 			image_index = 0
+			posso = true
+			ataque_mult += .5
+			
+			if dano{
+				instance_destroy(dano, false)
+				dano = noone
+			}
+			
+			//zerar o buff
+			ataque_buff = 0
 		}
 		
 		if image_index > image_number - 1{
 			estado = "parado"
 			hsp = 0
 			combo = 0
+			posso = true
+			ataque_mult = 1
+			
+			if dano{
+				instance_destroy(dano, false)
+				dano = noone
+			}
 		}
+		if dash{
+			estado = "dash"
+			image_index = 0
+			combo = 0
+			if dano{
+				instance_destroy(dano, false)
+				dano = noone
+			}
+		}
+		break
 	}
+	#endregion
+	
+	#region dash
+	case "dash":{
+		sprite_index = spr_player_dash
+		
+		//velocidade
+		hsp = image_xscale * dash_spd
+		
+		//saindo do estado
+		if image_index >= image_number - 1{
+			estado = "parado"
+			image_index = 0
+		}
+		
+		break
+	}
+	#endregion
+}
+if keyboard_check_pressed(vk_enter){
+	room_restart()
 }
